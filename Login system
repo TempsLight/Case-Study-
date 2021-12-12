@@ -1,0 +1,53 @@
+#include <iostream>
+
+using namespace std;
+
+class Login
+{
+private:
+    string myPassword;
+    string myUser;
+
+
+
+public:
+    void myHeader()
+    {
+        bool loginSuccess = false;
+        while(loginSuccess == false) {
+        cout << "======Please Log In to Access the Calculator========" << endl;
+        cout << "Username: ";
+        cin>> myUser;
+        cout << "Password: ";
+        cin>> myPassword;
+
+            if (myPassword != "hahahehe" && myUser != "huhuhu" ){
+                loginSuccess = false;
+                cout << "Incorrect Username or Password\n";
+                cout << "Please Try Again";
+            }
+            else {
+                system("cls");
+                loginSuccess = true;
+                cout << "Welcome. Access Granted" <<endl<<endl;
+
+            }
+         }
+
+
+       ;
+
+
+    }
+};
+
+
+int main()
+{
+    Login _login;
+    _login.myHeader();
+
+
+    system("pause");
+    return 0;
+}
