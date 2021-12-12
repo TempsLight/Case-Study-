@@ -77,10 +77,12 @@ int main()
 
     while (LogInCounter < 3)
     {
+        system("cls");
         cout << "USERNAME: ";
         cin >> UserName;
         cout << "PASSWORD: ";
         cin >> PassWord;
+        system("pause");
 
     if (UserName == "TempsLight" && PassWord == "Hahahehe")
     {
@@ -88,13 +90,14 @@ int main()
     }
     else
     {
-    cout << "Invalid login attempt. Please try again."<<endl;
+
+    cout << "Invalid login attempt. Please try again.\n\n\n"<<endl;
     LogInCounter++;
     }
     }
     if (LogInCounter == 3)
     {
-            cout << "Intruder Detected!";
+            cout << "Intruder Detected! \n\n";
             return 0;
     }
     system("cls");
@@ -136,7 +139,7 @@ int main()
                 }
                 else
                 {
-                    ready_exit = true;
+                    ready_exit = true; //To Exit the program
                 }
             }
         }
@@ -144,6 +147,8 @@ int main()
 
 
     system ("cls");
+    cout << "Thank You for Using my Calculator\n\n\n";
     system("pause");
     return 0;
 }
+
