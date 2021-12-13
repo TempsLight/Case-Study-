@@ -1,0 +1,224 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <string>
+#include <sstream>
+using namespace std;
+
+class Calculator{
+
+	private: // access specifier
+	char operation; // attributes
+	float num1,num2,answer; // attributes
+
+	vector<string> history;
+
+	public: // access specifier
+	void selection(string option_type){
+
+
+		cout << endl;
+
+		string num1_string = "Enter first number:";
+		if (option_type == "advance"){
+			num1_string = "Enter a number:";
+		}
+
+
+		bool number_ready = false;
+		while(number_ready == false){
+			cout << num1_string;
+			cin >> num1;
+			try {
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
+					throw 55;
+				}
+
+				number_ready = true;
+
+			}
+			catch(int ex){
+				cout << "Exceptions Code: " << ex << endl;
+				cout << "Message: Invalid input" << endl;
+			}
+		}
+
+
+
+		bool operation_ready = false; // initialize bool value
+		while(operation_ready == false){
+			cout << "Enter operation:"; // just in case na hindi +,-,*,/
+			cin >> operation;
+
+			// conditions goes here to validate if hindi operator ang inimput nya
+			if ((operation != '+' && operation != '-' && operation != '*' && operation != '/' && option_type == "basic") // basic
+				|| (operation != '!' && operation != '@' && option_type == "advance")){ // advance
+				operation_ready = false;
+				cout << "Message: Please enter a valid operation from the options" << endl;
+			}
+			else {
+				operation_ready = true;
+			}
+		}
+
+		if (operation != '!'){
+			number_ready = false;
+			while(number_ready == false){
+				cout << "Enter second number:";
+				cin >> num2;
+				try {
+					if (cin.fail()){
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
+						throw 55;
+					}
+
+					number_ready = true;
+
+				}
+				catch(int ex){
+					cout << "Exceptions Code: " << ex << endl;
+					cout << "Message: Invalid input" << endl;
+				}
+			} // end of while
+		} // end of if operation != '!'
+	}
+
+	float getAnswer(){
+
+
+		stringstream ss1,ss2,ss3;
+		string s_num1, s_num2, s_answer;
+
+		ss1 << num1;
+		ss1 >> s_num1;
+
+		ss2 << num2;
+		ss2 >> s_num2;
+
+		string info = s_num1 + " " + operation + " " + s_num2;
+
+		switch(operation){
+			case '+' :
+				answer = num1 + num2;
+				break;
+			case '-' :
+				answer = num1 - num2;
+				break;
+			case '*' :
+				answer = num1 * num2;
+				break;
+			case '/' :
+				answer = num1 / num2;
+				break;
+			case '!' :
+				answer = sqrt(num1);
+				info = "Square Root of " + s_num1;
+				break;
+			case '@' :
+				answer = pow(num1,num2);
+				info = s_num1 + " raise to " + s_num2;
+				break;
+		}
+
+		ss3 << answer;
+		ss3 >> s_answer;
+
+		info +=  " is " + s_answer;
+		history.push_back(info);
+
+		return answer;
+	}
+
+	void getHistory(){
+
+		for(int i = 0; i < history.size(); i++){
+			cout << history[i] << endl;
+		}
+	}
+
+};
+
+void myHeader(){ // method or functions
+
+	cout << "*****BASIC CALCULATOR*****"<<endl;
+	cout <<"Options"<<endl;
+	cout << "BASIC" <<endl;
+	cout << "[+] - Addtion"<<endl;
+	cout << "[-] - Subtraction"<<endl;
+	cout << "[*] - Mutliplication"<<endl;
+	cout << "[/] - Division"<<endl;
+
+	// ADVANCE
+	cout << "ADVANCE" << endl;
+	cout << "[!] - Square Root" << endl;
+	cout << "[@] - Exponentiation" << endl;
+
+}
+
+int main()
+{
+	char choice,history_choice;
+	string option_type;
+	Calculator _calc;
+
+	bool ready_exit = false;
+	while(ready_exit == false){
+		myHeader();
+
+
+
+		cout << "\nEnter 1 Key if Basic and other key for Advance: ";
+		getline(cin,option_type);
+
+		if (option_type == "1"){ // BASIC
+			_calc.selection("basic");
+		}
+		else { // ADVANCE
+			_calc.selection("advance");
+		}
+
+		cout << "Answer: " <<_calc.getAnswer() << endl;
+
+		cout << "Do you want to want to view the history? (Press y/y if yes or any key if not): ";
+		cin >> history_choice;
+
+		if (history_choice == 'Y' || history_choice == 'y'){
+			_calc.getHistory();
+		}
+
+
+		bool continue_ready = false;
+		while(continue_ready == false){
+			cout << "Do you want to continue? (Y/y N/n):";
+			cin >> choice;
+
+			if (choice != 'Y' && choice != 'y' && choice != 'N' && choice !='n'){
+				continue_ready = false;
+				cout << "Message: Please enter Y/y or N/n"<<endl;
+			}
+
+			else {
+				continue_ready = true;
+				if (choice == 'Y' || choice == 'y'){
+					ready_exit = false;
+					system("cls"); // to clear screen the console
+					cin.ignore();
+				}
+
+				else {
+					ready_exit = true;
+				}
+			}
+		}
+
+	}
+
+    system("pause");
+    return 0;
+}
